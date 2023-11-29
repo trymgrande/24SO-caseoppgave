@@ -75,17 +75,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route
-            index
-            element={
-              <ParticipantsList
-                participants={participants}
-                loggedIn={loggedIn}
-                onLogout={handleLogin}
-              />
-            }
-          />
-          <Route
-            path="participants"
+            path="/"
             element={
               <ParticipantsList
                 participants={participants}

@@ -48,7 +48,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({
     setAge("");
     setPhoneNumber("");
 
-    navigate("/participants");
+    navigate("/");
   };
 
   return (
@@ -103,7 +103,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({
 
         <button
           type="button"
-          onClick={() => navigate("/participants")}
+          onClick={() => navigate("/")}
           style={{
             background: "#fff",
             color: "#333",

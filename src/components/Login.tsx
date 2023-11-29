@@ -22,7 +22,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       onLogin();
       alert("Login successful");
 
-      navigate("/participants");
+      navigate("/");
     } else {
       // handle invalid login attempt
       alert("Please enter valid username and password.");
@@ -65,7 +65,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         <br />
         <button
           type="button"
-          onClick={() => navigate("/participants")}
+          onClick={() => navigate("/")}
           style={{
             background: "#fff",
             color: "#333",
