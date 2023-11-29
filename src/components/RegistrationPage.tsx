@@ -25,20 +25,17 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({
 
   const handleRegister = () => {
     if (!loggedIn) {
-      // Show a dialog box indicating the user is not logged in
+      // implement SMS registration confirmation logic here
       alert("Confirm the registration via SMS");
-
-      // implement SMS confirmation logic here
       const confirmResult = true; // mocking user SMS confirmation
 
       if (!confirmResult) {
-        return; // User did not confirm the registration
+        return; // user did not confirm the registration
       }
     }
 
-    // Perform validation here if needed
     const newParticipant: Participant = {
-      id: Math.random(), // You should use a better ID generation method in a real app
+      id: Math.floor(Math.random() * 10000000) + 1, // ID generation should be reconsidered
       name,
       age,
       phoneNumber,
@@ -46,7 +43,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({
 
     onRegister(newParticipant);
 
-    // Reset form fields
+    // reset form fields
     setName("");
     setAge("");
     setPhoneNumber("");
@@ -55,42 +52,81 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({
   };
 
   return (
-    <div>
+    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <h2>Registration Page</h2>
       <form>
-        <label>
+        <label style={{ display: "block", marginBottom: "10px" }}>
           Name:
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "8px",
+              boxSizing: "border-box",
+              marginBottom: "10px",
+            }}
           />
         </label>
         <br />
-        <label>
+        <label style={{ display: "block", marginBottom: "10px" }}>
           Age:
           <input
             type="number"
             value={age}
             onChange={(e) => setAge(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "8px",
+              boxSizing: "border-box",
+              marginBottom: "10px",
+            }}
           />
         </label>
         <br />
-        <label>
+        <label style={{ display: "block", marginBottom: "10px" }}>
           Phone Number:
           <input
             type="tel"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "8px",
+              boxSizing: "border-box",
+              marginBottom: "10px",
+            }}
           />
         </label>
         <br />
 
-        <button type="button" onClick={() => navigate("/participants")}>
+        <button
+          type="button"
+          onClick={() => navigate("/participants")}
+          style={{
+            background: "#fff",
+            color: "#333",
+            padding: "10px",
+            borderRadius: "5px",
+            marginRight: "10px",
+            cursor: "pointer",
+          }}
+        >
           Cancel
         </button>
 
-        <button type="button" onClick={handleRegister}>
+        <button
+          type="button"
+          onClick={handleRegister}
+          style={{
+            background: "#4caf50",
+            color: "#fff",
+            padding: "10px",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
           Register
         </button>
       </form>

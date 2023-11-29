@@ -15,9 +15,9 @@ const App: React.FC = () => {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
-  const [localStorageChecked, setLocalStorageChecked] =
+  const [storedLoggedInChecked, setStoredLoggedInChecked] =
     useState<boolean>(false);
-  const [participantsDataLoaded, setParticipantsDataLoaded] =
+  const [storedParticipantsChecked, setStoredParticipantsChecked] =
     useState<boolean>(false);
 
   useEffect(() => {
@@ -25,28 +25,28 @@ const App: React.FC = () => {
       window.localStorage.getItem("loggedIn") || "false"
     );
     setLoggedIn(storedLoggedIn);
-    setLocalStorageChecked(true);
+    setStoredLoggedInChecked(true);
   }, []);
 
   useEffect(() => {
-    if (localStorageChecked) {
+    if (storedLoggedInChecked) {
       window.localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
     }
-  }, [loggedIn, localStorageChecked]);
+  }, [loggedIn, storedLoggedInChecked]);
 
   useEffect(() => {
     const storedParticipants = JSON.parse(
       window.localStorage.getItem("participants") || "[]"
     );
     setParticipants(storedParticipants);
-    setParticipantsDataLoaded(true);
+    setStoredParticipantsChecked(true);
   }, []);
 
   useEffect(() => {
-    if (participantsDataLoaded) {
+    if (storedParticipantsChecked) {
       window.localStorage.setItem("participants", JSON.stringify(participants));
     }
-  }, [participants, participantsDataLoaded]);
+  }, [participants, storedParticipantsChecked]);
 
   const handleRegister = (newParticipant: Participant) => {
     setParticipants((prevParticipants) => [
@@ -59,44 +59,54 @@ const App: React.FC = () => {
     setLoggedIn(!loggedIn);
   };
 
-  // Render nothing until the loggedIn state has been set
-  if (!localStorageChecked) {
-    return null; // or a loading indicator, etc.
+  // render nothing until the stored values are retrieved
+  if (!storedLoggedInChecked || !storedParticipantsChecked) {
+    return null;
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* <Route path="/" render={() => <Redirect to="/participants" />} /> */}
-        <Route
-          index
-          element={
-            <ParticipantsList
-              participants={participants}
-              loggedIn={loggedIn}
-              onLogout={handleLogin}
-            />
-          }
-        />
-        <Route
-          path="participants"
-          element={
-            <ParticipantsList
-              participants={participants}
-              loggedIn={loggedIn}
-              onLogout={handleLogin}
-            />
-          }
-        />
-        <Route
-          path="registration"
-          element={
-            <RegistrationPage onRegister={handleRegister} loggedIn={loggedIn} />
-          }
-        />
-        <Route path="login" element={<Login onLogin={handleLogin} />} />
-      </Routes>
-    </BrowserRouter>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <BrowserRouter>
+        <Routes>
+          <Route
+            index
+            element={
+              <ParticipantsList
+                participants={participants}
+                loggedIn={loggedIn}
+                onLogout={handleLogin}
+              />
+            }
+          />
+          <Route
+            path="participants"
+            element={
+              <ParticipantsList
+                participants={participants}
+                loggedIn={loggedIn}
+                onLogout={handleLogin}
+              />
+            }
+          />
+          <Route
+            path="registration"
+            element={
+              <RegistrationPage
+                onRegister={handleRegister}
+                loggedIn={loggedIn}
+              />
+            }
+          />
+          <Route path="login" element={<Login onLogin={handleLogin} />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 };
 
